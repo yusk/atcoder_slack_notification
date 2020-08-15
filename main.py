@@ -24,6 +24,7 @@ if __name__ == "__main__":
     now = datetime.datetime.now()
     for user_id in USER_IDS:
         res = requests.get(get_submissions_api_url(user_id))
+        messages = []
         for sub in res.json():
             contest_id = sub['contest_id']
             problem_id = sub['problem_id']
@@ -35,4 +36,7 @@ if __name__ == "__main__":
                 continue
             if (now - submitted_at).days > 0:
                 continue
+            messages.append(message)
+        if len(message) > 0:
+            message = "\n".join(sorted(messages))
             slack.notify(text=message, username="ac-ntfy", mrkdwn=False)
