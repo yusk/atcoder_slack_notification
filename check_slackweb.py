@@ -21,7 +21,6 @@ if __name__ == "__main__":
         USER_IDS = target["user_ids"]
         # slack_webhook_url = "https://hooks.slack.com/services/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"
         print(slack_webhook_url)
-
         res = requests.post(slack_webhook_url, json={"text": "test"})
         print(res)
         print(res.text)

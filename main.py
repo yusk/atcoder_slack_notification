@@ -1,6 +1,5 @@
 import datetime
 
-import slackweb
 import requests
 
 from constants import TARGETS
@@ -19,7 +18,6 @@ if __name__ == "__main__":
     for target in TARGETS:
         SLACK_WEBHOOK_URL = target["slack_webhook_url"]
         USER_IDS = target["user_ids"]
-        slack = slackweb.Slack(url=SLACK_WEBHOOK_URL)
         for user_id in USER_IDS:
             res = requests.get(get_submissions_api_url(user_id))
             messages = []
@@ -39,4 +37,11 @@ if __name__ == "__main__":
             if len(messages) > 0:
                 message = "\n".join(sorted(messages))
                 print(message)
-                slack.notify(text=message, mrkdwn=False)
+                res = requests.post(
+                    SLACK_WEBHOOK_URL,
+                    json={
+                        "text": message,
+                        "username": "ac-ntfy"
+                    },
+                    headers={"Content-type": "application/json"})
+                print(res, res.text)
