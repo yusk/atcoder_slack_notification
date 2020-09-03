@@ -7,8 +7,8 @@ verify_ssl = true
 
 [packages]
 python-dotenv = "*"
-slackweb = "*"
 requests = "*"
+slackweb = "*"
 
 [requires]
 python_version = "3.6"
